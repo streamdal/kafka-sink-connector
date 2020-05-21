@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <groupId>sh.batch.kafka</groupId>
+    <artifactId>sink-connector</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.confluent</groupId>
+                <version>0.11.3</version>
+                <artifactId>kafka-connect-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>kafka-connect</goal>
+                        </goals>
+                        <configuration>
+                            <title>Batch.sh Kafka Sink Connector</title>
+                            <documentationUrl>
+                                https://docs.batch.sh/manuals/user-guide/kafka-sink-connector.html
+                            </documentationUrl>
+                            <description>
+                                Batch.sh is where you can catalog, search, and replay your events.
+                                The Batch.sh Kafka sink connector lets you
+                                quickly and easily move messages from Kafka topics into the Batch.sh
+                                cloud collectors.
+                            </description>
+
+                            <ownerUsername>batchsh</ownerUsername>
+                            <ownerType>organization</ownerType>
+                            <ownerName>Batch.sh, Inc</ownerName>
+                            <ownerUrl>https://batch.sh/</ownerUrl>
+
+                            <componentTypes>
+                                <componentType>sink</componentType>
+                            </componentTypes>
+                            <tags>
+                                <tag>batch</tag>
+                                <tag>search</tag>
+                                <tag>replay</tag>
+                            </tags>
+                            <confluentControlCenterIntegration>true
+                            </confluentControlCenterIntegration>
+                            <singleMessageTransforms>false
+                            </singleMessageTransforms>
+                            <supportedEncodings>UTF-8</supportedEncodings>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+    </build>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.apache.kafka/connect-api -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>connect-api</artifactId>
+            <version>2.5.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+
+</project>
