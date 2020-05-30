@@ -19,11 +19,8 @@ class BatchSinkConnectorTest {
         sc.start(inputs);
 
         assertEquals( "foobar",
-                sc.connectorConfig.getString(BatchSinkConnectorConfig.LICENSE_CONFIG),
+                sc.configProperties.get(BatchSinkConnectorConfig.LICENSE_CONFIG),
                 "input and configured license should be the same");
-        assertEquals("grpc-collector.batch.sh:8080",
-                sc.connectorConfig.getString(BatchSinkConnectorConfig.BATCH_COLLECTOR_CONFIG),
-                "input and configured collectorURL should be the same");
     }
 
     @Test

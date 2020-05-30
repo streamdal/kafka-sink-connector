@@ -59,17 +59,18 @@ public class BatchSinkTask extends SinkTask {
         // the AddRecords RPC takes an array of KafkaSinkRecords so we have to
         // iterate through the ones we get and convert to our proto
         for (SinkRecord record : records) {
-
-            Kafka.KafkaSinkRecord ksr = Kafka.KafkaSinkRecord.newBuilder()
-                    .setKey(ByteString.copyFrom((byte[])record.key()))
+            Kafka.KafkaSinkRecord.Builder ksr = Kafka.KafkaSinkRecord.newBuilder()
                     .setValue(ByteString.copyFrom((byte[])record.value()))
                     .setTopic(record.topic())
                     .setPartition(record.kafkaPartition())
                     .setOffset(record.kafkaOffset())
-                    .setTimestamp(record.timestamp())
-                    .build();
+                    .setTimestamp(record.timestamp());
 
-            arr.addRecords(ksr);
+            if (record.key() != null) {
+                ksr.setKey(ByteString.copyFrom((byte[])record.key()));
+            }
+
+            arr.addRecords(ksr.build());
         }
 
         // execute the RPC with the compiled list of records

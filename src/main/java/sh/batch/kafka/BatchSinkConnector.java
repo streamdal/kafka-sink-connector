@@ -1,8 +1,10 @@
 package sh.batch.kafka;
 
 import org.apache.kafka.common.config.ConfigDef;
+import org.apache.kafka.common.config.ConfigException;
 import org.apache.kafka.common.utils.AppInfoParser;
 import org.apache.kafka.connect.connector.Task;
+import org.apache.kafka.connect.errors.ConnectException;
 import org.apache.kafka.connect.sink.SinkConnector;
 
 import java.util.ArrayList;
@@ -11,12 +13,16 @@ import java.util.List;
 import java.util.Map;
 
 public class BatchSinkConnector extends SinkConnector {
-
-    protected BatchSinkConnectorConfig connectorConfig;
+    protected Map<String, String> configProperties;
 
     @Override
     public void start(Map<String, String> props) {
-        this.connectorConfig = new BatchSinkConnectorConfig(props);
+        try {
+            configProperties = props;
+            new BatchSinkConnectorConfig(props);
+        } catch (ConfigException e) {
+            throw new ConnectException("Couldn't start BatchSinkConnector due to configuration error",e);
+        }
     }
 
     @Override
@@ -26,17 +32,14 @@ public class BatchSinkConnector extends SinkConnector {
 
     @Override
     public List<Map<String, String>> taskConfigs(int maxTasks) {
-        ArrayList<Map<String, String>> configs = new ArrayList<>();
+        List<Map<String, String>> taskConfigs = new ArrayList<>();
+        Map<String, String> taskProps = new HashMap<>(configProperties);
+
+        taskProps.putAll(configProperties);
         for (int i = 0; i < maxTasks; i++) {
-            Map<String, String> config = new HashMap<>();
-
-            // create input param maps to pass along to tasks
-            config.put(BatchSinkConnectorConfig.LICENSE_CONFIG, connectorConfig.getString(BatchSinkConnectorConfig.LICENSE_CONFIG));
-            config.put(BatchSinkConnectorConfig.BATCH_COLLECTOR_CONFIG, connectorConfig.getString(BatchSinkConnectorConfig.BATCH_COLLECTOR_CONFIG));
-
-            configs.add(config);
+            taskConfigs.add(taskProps);
         }
-        return configs;
+        return taskConfigs;
     }
 
     @Override
