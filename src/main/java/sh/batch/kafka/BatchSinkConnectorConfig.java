@@ -26,7 +26,7 @@ public class BatchSinkConnectorConfig extends AbstractConfig {
                         "License key to be used when authenticating against batch cloud collector")
                 .define(BATCH_COLLECTOR_CONFIG,
                         ConfigDef.Type.STRING,
-                        "kafka-sink-collector.batch.sh:9000",
+                        "kafka-sink-collector.dev.batch.sh:9000",
                         (name, value) -> {
                             String strVal = value.toString();
                             try {
