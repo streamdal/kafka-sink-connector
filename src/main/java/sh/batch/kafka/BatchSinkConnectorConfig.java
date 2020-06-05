@@ -26,12 +26,9 @@ public class BatchSinkConnectorConfig extends AbstractConfig {
                         "License key to be used when authenticating against batch cloud collector")
                 .define(BATCH_COLLECTOR_CONFIG,
                         ConfigDef.Type.STRING,
-                        "grpc-collector.batch.sh:8080",
+                        "kafka-sink-collector.batch.sh:9000",
                         (name, value) -> {
                             String strVal = value.toString();
-//                            if (!strVal.startsWith("http")) {
-//                                strVal = "http://" + strVal;
-//                            }
                             try {
                                 new URI(strVal);
                             } catch (URISyntaxException e) {
