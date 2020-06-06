@@ -14,13 +14,13 @@ class BatchSinkConnectorTest {
         BatchSinkConnector sc = new BatchSinkConnector();
         HashMap<String, String> inputs = new HashMap<>();
 
-        inputs.put(BatchSinkConnectorConfig.LICENSE_CONFIG, "foobar");
+        inputs.put(BatchSinkConnectorConfig.TOKEN_CONFIG, "foobar");
 
         sc.start(inputs);
 
         assertEquals( "foobar",
-                sc.configProperties.get(BatchSinkConnectorConfig.LICENSE_CONFIG),
-                "input and configured license should be the same");
+                sc.configProperties.get(BatchSinkConnectorConfig.TOKEN_CONFIG),
+                "input and configured token should be the same");
     }
 
     @Test

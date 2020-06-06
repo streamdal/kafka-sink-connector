@@ -34,14 +34,14 @@ public class BatchSinkTask extends SinkTask {
 
     @Override
     public void start(Map<String, String> params) {
-        String licenseKey = params.get(BatchSinkConnectorConfig.LICENSE_CONFIG);
-        String batchCollector = params.get(BatchSinkConnectorConfig.BATCH_COLLECTOR_CONFIG);
+        String collectionToken = params.get(BatchSinkConnectorConfig.TOKEN_CONFIG);
+        String batchCollector = params.get(BatchSinkConnectorConfig.COLLECTOR_ADDRESS_CONFIG);
 
         // create the channel for our grpc connection
-        // put the client key into the request metadata
+        // put the client collection key into the request metadata
         Metadata metadata = new Metadata();
-        Metadata.Key<String> licenseMetadataKey = Metadata.Key.of("batch.license", Metadata.ASCII_STRING_MARSHALLER);
-        metadata.put(licenseMetadataKey, licenseKey);
+        Metadata.Key<String> tokenMetadataKey = Metadata.Key.of("batch.token", Metadata.ASCII_STRING_MARSHALLER);
+        metadata.put(tokenMetadataKey, collectionToken);
 
         channel = ManagedChannelBuilder.forTarget(batchCollector)
                 .intercept(MetadataUtils.newAttachHeadersInterceptor(metadata))
