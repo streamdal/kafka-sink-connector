@@ -23,7 +23,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: jar
-          path: target/.*.jar  
+          path: target/*.jar  
           
   create-and-push-sandbox-image: 
     runs-on: ubuntu-latest
