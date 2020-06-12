@@ -34,13 +34,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: jar
-      - name: Short SHA
-        id: vars
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"  
-      - uses: whoan/docker-build-with-cache-action@v5
+      - name: Docker Login
+        uses: azure/docker-login@v1
         with:
+          login-server: docker.pkg.github.com
           username: ${{ github.actor }}
           password: ${{ github.token }}
-          registry: docker.pkg.github.com
-          image_name: connect
-          image_tag: ${{ steps.vars.outputs.sha_short }},latest
+      - name: Run build & push
+        run: |
+          make docker/build
+          make docker/push
