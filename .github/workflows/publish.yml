@@ -1,9 +1,9 @@
-name: Publish JAR to GitHub Packages
+name: Create JAR and Sandbox Image
 on:
   push:
     branches: [master]
 jobs:
-  publish:
+  create and publish jar:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -13,4 +13,23 @@ jobs:
       - name: Publish package
         run: mvn -B deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+      - uses: actions/upload-artifact@v1
+        with:
+          name: jar
+          path: target/*connector.jar
+          
+  create and push sandbox image: 
+    runs-on: ubuntu-latest
+    needs: create and publish jar
+    steps:
+      - name: Download connector JAR from actions
+        uses: actions/download-artifact@v1
+        with:
+          name: jar  
+      - uses: whoan/docker-build-with-cache-action@v5
+        with:
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+          registry: docker.pkg.github.com
+          image_name: ${GITHUB_SHA::8},latest
