@@ -20,7 +20,7 @@ jobs:
         run: mvn -B deploy
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v2
         with:
           name: jar
           path: target/.*.jar  
@@ -30,7 +30,7 @@ jobs:
     needs: create-and-publish-jar
     steps:
       - name: Download connector JAR from actions
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: jar  
       - uses: whoan/docker-build-with-cache-action@v5
