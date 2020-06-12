@@ -33,10 +33,14 @@ jobs:
       - name: Download connector JAR from actions
         uses: actions/download-artifact@v2
         with:
-          path: jar  
+          path: jar
+      - name: Short SHA
+        id: vars
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"  
       - uses: whoan/docker-build-with-cache-action@v5
         with:
           username: ${{ github.actor }}
           password: ${{ github.token }}
           registry: docker.pkg.github.com
-          image_name: ${GITHUB_SHA::8},latest
+          image_name: connect
+          image_tag: ${{ steps.vars.outputs.sha_short }},latest
