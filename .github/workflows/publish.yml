@@ -10,14 +10,22 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Publish package
-        run: mvn -B deploy
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2 
+      - name: Build
+        run: mvn clean -B package --file pom.xml
       - uses: actions/upload-artifact@v1
         with:
           name: jar
           path: target/*.jar
+      - name: Publish package
+        run: mvn -B deploy
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
           
   create-and-push-sandbox-image: 
     runs-on: ubuntu-latest
