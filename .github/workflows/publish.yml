@@ -16,16 +16,14 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2 
-      - name: Build
-        run: mvn clean -B package --file pom.xml
-      - uses: actions/upload-artifact@v1
-        with:
-          name: jar
-          path: target/sink-connector-1.0-SNAPSHOT.jar
       - name: Publish package
         run: mvn -B deploy
         env:
           GITHUB_TOKEN: ${{ github.token }}
+      - uses: actions/upload-artifact@v1
+        with:
+          name: jar
+          path: target/.*.jar  
           
   create-and-push-sandbox-image: 
     runs-on: ubuntu-latest
