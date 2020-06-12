@@ -33,7 +33,7 @@ jobs:
       - name: Download connector JAR from actions
         uses: actions/download-artifact@v2
         with:
-          name: jar  
+          path: jar  
       - uses: whoan/docker-build-with-cache-action@v5
         with:
           username: ${{ github.actor }}
