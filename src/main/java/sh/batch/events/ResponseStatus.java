@@ -733,8 +733,9 @@ public final class ResponseStatus {
   static {
     java.lang.String[] descriptorData = {
       "\n\014status.proto\022\006events\"\'\n\006Status\022\014\n\004code" +
-      "\030\001 \001(\005\022\017\n\007message\030\002 \001(\tB!\n\017sh.batch.even" +
-      "tsB\016ResponseStatusb\006proto3"
+      "\030\001 \001(\005\022\017\n\007message\030\002 \001(\tBO\n\017sh.batch.even" +
+      "tsB\016ResponseStatusZ,github.com/batchcorp" +
+      "/schemas/build/go/eventsb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

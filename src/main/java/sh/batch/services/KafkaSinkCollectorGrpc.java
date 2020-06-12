@@ -19,165 +19,165 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler",
-    comments = "Source: grpc-collector.proto")
-public final class GRPCCollectorGrpc {
+    comments = "Source: kafka-sink-collector.proto")
+public final class KafkaSinkCollectorGrpc {
 
-  private GRPCCollectorGrpc() {}
+  private KafkaSinkCollectorGrpc() {}
 
-  public static final String SERVICE_NAME = "services.GRPCCollector";
+  public static final String SERVICE_NAME = "services.KafkaSinkCollector";
 
   // Static method descriptors that strictly reflect the proto.
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static final io.grpc.MethodDescriptor<sh.batch.services.AddRecordsRequest,
-      sh.batch.services.AddRecordsResponse> METHOD_ADD_RECORDS =
-      io.grpc.MethodDescriptor.<sh.batch.services.AddRecordsRequest, sh.batch.services.AddRecordsResponse>newBuilder()
+  public static final io.grpc.MethodDescriptor<sh.batch.services.AddKafkaSinkRecordRequest,
+      sh.batch.services.AddKafkaSinkRecordResponse> METHOD_ADD_RECORD =
+      io.grpc.MethodDescriptor.<sh.batch.services.AddKafkaSinkRecordRequest, sh.batch.services.AddKafkaSinkRecordResponse>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "services.GRPCCollector", "AddRecords"))
+              "services.KafkaSinkCollector", "AddRecord"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              sh.batch.services.AddRecordsRequest.getDefaultInstance()))
+              sh.batch.services.AddKafkaSinkRecordRequest.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              sh.batch.services.AddRecordsResponse.getDefaultInstance()))
+              sh.batch.services.AddKafkaSinkRecordResponse.getDefaultInstance()))
           .build();
 
   /**
    * Creates a new async stub that supports all call types for the service
    */
-  public static GRPCCollectorStub newStub(io.grpc.Channel channel) {
-    return new GRPCCollectorStub(channel);
+  public static KafkaSinkCollectorStub newStub(io.grpc.Channel channel) {
+    return new KafkaSinkCollectorStub(channel);
   }
 
   /**
    * Creates a new blocking-style stub that supports unary and streaming output calls on the service
    */
-  public static GRPCCollectorBlockingStub newBlockingStub(
+  public static KafkaSinkCollectorBlockingStub newBlockingStub(
       io.grpc.Channel channel) {
-    return new GRPCCollectorBlockingStub(channel);
+    return new KafkaSinkCollectorBlockingStub(channel);
   }
 
   /**
    * Creates a new ListenableFuture-style stub that supports unary calls on the service
    */
-  public static GRPCCollectorFutureStub newFutureStub(
+  public static KafkaSinkCollectorFutureStub newFutureStub(
       io.grpc.Channel channel) {
-    return new GRPCCollectorFutureStub(channel);
+    return new KafkaSinkCollectorFutureStub(channel);
   }
 
   /**
    */
-  public static abstract class GRPCCollectorImplBase implements io.grpc.BindableService {
+  public static abstract class KafkaSinkCollectorImplBase implements io.grpc.BindableService {
 
     /**
      */
-    public void addRecords(sh.batch.services.AddRecordsRequest request,
-        io.grpc.stub.StreamObserver<sh.batch.services.AddRecordsResponse> responseObserver) {
-      asyncUnimplementedUnaryCall(METHOD_ADD_RECORDS, responseObserver);
+    public void addRecord(sh.batch.services.AddKafkaSinkRecordRequest request,
+        io.grpc.stub.StreamObserver<sh.batch.services.AddKafkaSinkRecordResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(METHOD_ADD_RECORD, responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
-            METHOD_ADD_RECORDS,
+            METHOD_ADD_RECORD,
             asyncUnaryCall(
               new MethodHandlers<
-                sh.batch.services.AddRecordsRequest,
-                sh.batch.services.AddRecordsResponse>(
-                  this, METHODID_ADD_RECORDS)))
+                sh.batch.services.AddKafkaSinkRecordRequest,
+                sh.batch.services.AddKafkaSinkRecordResponse>(
+                  this, METHODID_ADD_RECORD)))
           .build();
     }
   }
 
   /**
    */
-  public static final class GRPCCollectorStub extends io.grpc.stub.AbstractStub<GRPCCollectorStub> {
-    private GRPCCollectorStub(io.grpc.Channel channel) {
+  public static final class KafkaSinkCollectorStub extends io.grpc.stub.AbstractStub<KafkaSinkCollectorStub> {
+    private KafkaSinkCollectorStub(io.grpc.Channel channel) {
       super(channel);
     }
 
-    private GRPCCollectorStub(io.grpc.Channel channel,
+    private KafkaSinkCollectorStub(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
     }
 
     @java.lang.Override
-    protected GRPCCollectorStub build(io.grpc.Channel channel,
+    protected KafkaSinkCollectorStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
-      return new GRPCCollectorStub(channel, callOptions);
+      return new KafkaSinkCollectorStub(channel, callOptions);
     }
 
     /**
      */
-    public void addRecords(sh.batch.services.AddRecordsRequest request,
-        io.grpc.stub.StreamObserver<sh.batch.services.AddRecordsResponse> responseObserver) {
+    public void addRecord(sh.batch.services.AddKafkaSinkRecordRequest request,
+        io.grpc.stub.StreamObserver<sh.batch.services.AddKafkaSinkRecordResponse> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(METHOD_ADD_RECORDS, getCallOptions()), request, responseObserver);
+          getChannel().newCall(METHOD_ADD_RECORD, getCallOptions()), request, responseObserver);
     }
   }
 
   /**
    */
-  public static final class GRPCCollectorBlockingStub extends io.grpc.stub.AbstractStub<GRPCCollectorBlockingStub> {
-    private GRPCCollectorBlockingStub(io.grpc.Channel channel) {
+  public static final class KafkaSinkCollectorBlockingStub extends io.grpc.stub.AbstractStub<KafkaSinkCollectorBlockingStub> {
+    private KafkaSinkCollectorBlockingStub(io.grpc.Channel channel) {
       super(channel);
     }
 
-    private GRPCCollectorBlockingStub(io.grpc.Channel channel,
+    private KafkaSinkCollectorBlockingStub(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
     }
 
     @java.lang.Override
-    protected GRPCCollectorBlockingStub build(io.grpc.Channel channel,
+    protected KafkaSinkCollectorBlockingStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
-      return new GRPCCollectorBlockingStub(channel, callOptions);
+      return new KafkaSinkCollectorBlockingStub(channel, callOptions);
     }
 
     /**
      */
-    public sh.batch.services.AddRecordsResponse addRecords(sh.batch.services.AddRecordsRequest request) {
+    public sh.batch.services.AddKafkaSinkRecordResponse addRecord(sh.batch.services.AddKafkaSinkRecordRequest request) {
       return blockingUnaryCall(
-          getChannel(), METHOD_ADD_RECORDS, getCallOptions(), request);
+          getChannel(), METHOD_ADD_RECORD, getCallOptions(), request);
     }
   }
 
   /**
    */
-  public static final class GRPCCollectorFutureStub extends io.grpc.stub.AbstractStub<GRPCCollectorFutureStub> {
-    private GRPCCollectorFutureStub(io.grpc.Channel channel) {
+  public static final class KafkaSinkCollectorFutureStub extends io.grpc.stub.AbstractStub<KafkaSinkCollectorFutureStub> {
+    private KafkaSinkCollectorFutureStub(io.grpc.Channel channel) {
       super(channel);
     }
 
-    private GRPCCollectorFutureStub(io.grpc.Channel channel,
+    private KafkaSinkCollectorFutureStub(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
     }
 
     @java.lang.Override
-    protected GRPCCollectorFutureStub build(io.grpc.Channel channel,
+    protected KafkaSinkCollectorFutureStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
-      return new GRPCCollectorFutureStub(channel, callOptions);
+      return new KafkaSinkCollectorFutureStub(channel, callOptions);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<sh.batch.services.AddRecordsResponse> addRecords(
-        sh.batch.services.AddRecordsRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<sh.batch.services.AddKafkaSinkRecordResponse> addRecord(
+        sh.batch.services.AddKafkaSinkRecordRequest request) {
       return futureUnaryCall(
-          getChannel().newCall(METHOD_ADD_RECORDS, getCallOptions()), request);
+          getChannel().newCall(METHOD_ADD_RECORD, getCallOptions()), request);
     }
   }
 
-  private static final int METHODID_ADD_RECORDS = 0;
+  private static final int METHODID_ADD_RECORD = 0;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
-    private final GRPCCollectorImplBase serviceImpl;
+    private final KafkaSinkCollectorImplBase serviceImpl;
     private final int methodId;
 
-    MethodHandlers(GRPCCollectorImplBase serviceImpl, int methodId) {
+    MethodHandlers(KafkaSinkCollectorImplBase serviceImpl, int methodId) {
       this.serviceImpl = serviceImpl;
       this.methodId = methodId;
     }
@@ -186,9 +186,9 @@ public final class GRPCCollectorGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_ADD_RECORDS:
-          serviceImpl.addRecords((sh.batch.services.AddRecordsRequest) request,
-              (io.grpc.stub.StreamObserver<sh.batch.services.AddRecordsResponse>) responseObserver);
+        case METHODID_ADD_RECORD:
+          serviceImpl.addRecord((sh.batch.services.AddKafkaSinkRecordRequest) request,
+              (io.grpc.stub.StreamObserver<sh.batch.services.AddKafkaSinkRecordResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -206,10 +206,10 @@ public final class GRPCCollectorGrpc {
     }
   }
 
-  private static final class GRPCCollectorDescriptorSupplier implements io.grpc.protobuf.ProtoFileDescriptorSupplier {
+  private static final class KafkaSinkCollectorDescriptorSupplier implements io.grpc.protobuf.ProtoFileDescriptorSupplier {
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return sh.batch.services.GrpcCollector.getDescriptor();
+      return sh.batch.services.KafkaSinkCollectorOuterClass.getDescriptor();
     }
   }
 
@@ -218,12 +218,12 @@ public final class GRPCCollectorGrpc {
   public static io.grpc.ServiceDescriptor getServiceDescriptor() {
     io.grpc.ServiceDescriptor result = serviceDescriptor;
     if (result == null) {
-      synchronized (GRPCCollectorGrpc.class) {
+      synchronized (KafkaSinkCollectorGrpc.class) {
         result = serviceDescriptor;
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
-              .setSchemaDescriptor(new GRPCCollectorDescriptorSupplier())
-              .addMethod(METHOD_ADD_RECORDS)
+              .setSchemaDescriptor(new KafkaSinkCollectorDescriptorSupplier())
+              .addMethod(METHOD_ADD_RECORD)
               .build();
         }
       }

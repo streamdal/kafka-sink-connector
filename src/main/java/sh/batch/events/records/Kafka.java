@@ -15,7 +15,7 @@ public final class Kafka {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface KafkaSinkRecordOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:events.records.KafkaSinkRecord)
+      // @@protoc_insertion_point(interface_extends:records.KafkaSinkRecord)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -61,11 +61,11 @@ public final class Kafka {
     int getPartition();
   }
   /**
-   * Protobuf type {@code events.records.KafkaSinkRecord}
+   * Protobuf type {@code records.KafkaSinkRecord}
    */
   public  static final class KafkaSinkRecord extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:events.records.KafkaSinkRecord)
+      // @@protoc_insertion_point(message_implements:records.KafkaSinkRecord)
       KafkaSinkRecordOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use KafkaSinkRecord.newBuilder() to construct.
@@ -160,13 +160,13 @@ public final class Kafka {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return sh.batch.events.records.Kafka.internal_static_events_records_KafkaSinkRecord_descriptor;
+      return sh.batch.events.records.Kafka.internal_static_records_KafkaSinkRecord_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return sh.batch.events.records.Kafka.internal_static_events_records_KafkaSinkRecord_fieldAccessorTable
+      return sh.batch.events.records.Kafka.internal_static_records_KafkaSinkRecord_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               sh.batch.events.records.Kafka.KafkaSinkRecord.class, sh.batch.events.records.Kafka.KafkaSinkRecord.Builder.class);
     }
@@ -469,21 +469,21 @@ public final class Kafka {
       return builder;
     }
     /**
-     * Protobuf type {@code events.records.KafkaSinkRecord}
+     * Protobuf type {@code records.KafkaSinkRecord}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:events.records.KafkaSinkRecord)
+        // @@protoc_insertion_point(builder_implements:records.KafkaSinkRecord)
         sh.batch.events.records.Kafka.KafkaSinkRecordOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return sh.batch.events.records.Kafka.internal_static_events_records_KafkaSinkRecord_descriptor;
+        return sh.batch.events.records.Kafka.internal_static_records_KafkaSinkRecord_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return sh.batch.events.records.Kafka.internal_static_events_records_KafkaSinkRecord_fieldAccessorTable
+        return sh.batch.events.records.Kafka.internal_static_records_KafkaSinkRecord_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 sh.batch.events.records.Kafka.KafkaSinkRecord.class, sh.batch.events.records.Kafka.KafkaSinkRecord.Builder.class);
       }
@@ -524,7 +524,7 @@ public final class Kafka {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return sh.batch.events.records.Kafka.internal_static_events_records_KafkaSinkRecord_descriptor;
+        return sh.batch.events.records.Kafka.internal_static_records_KafkaSinkRecord_descriptor;
       }
 
       @java.lang.Override
@@ -890,10 +890,10 @@ public final class Kafka {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:events.records.KafkaSinkRecord)
+      // @@protoc_insertion_point(builder_scope:records.KafkaSinkRecord)
     }
 
-    // @@protoc_insertion_point(class_scope:events.records.KafkaSinkRecord)
+    // @@protoc_insertion_point(class_scope:records.KafkaSinkRecord)
     private static final sh.batch.events.records.Kafka.KafkaSinkRecord DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new sh.batch.events.records.Kafka.KafkaSinkRecord();
@@ -931,10 +931,10 @@ public final class Kafka {
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_events_records_KafkaSinkRecord_descriptor;
+    internal_static_records_KafkaSinkRecord_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_events_records_KafkaSinkRecord_fieldAccessorTable;
+      internal_static_records_KafkaSinkRecord_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -944,21 +944,22 @@ public final class Kafka {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\023records/kafka.proto\022\016events.records\"r\n" +
-      "\017KafkaSinkRecord\022\r\n\005topic\030\001 \001(\t\022\013\n\003key\030\002" +
-      " \001(\014\022\r\n\005value\030\003 \001(\014\022\021\n\ttimestamp\030\004 \001(\003\022\016" +
-      "\n\006offset\030\005 \001(\003\022\021\n\tpartition\030\006 \001(\005B\031\n\027sh." +
-      "batch.events.recordsb\006proto3"
+      "\n\023records/kafka.proto\022\007records\"r\n\017KafkaS" +
+      "inkRecord\022\r\n\005topic\030\001 \001(\t\022\013\n\003key\030\002 \001(\014\022\r\n" +
+      "\005value\030\003 \001(\014\022\021\n\ttimestamp\030\004 \001(\003\022\016\n\006offse" +
+      "t\030\005 \001(\003\022\021\n\tpartition\030\006 \001(\005BO\n\027sh.batch.e" +
+      "vents.recordsZ4github.com/batchcorp/sche" +
+      "mas/build/go/events/recordsb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         });
-    internal_static_events_records_KafkaSinkRecord_descriptor =
+    internal_static_records_KafkaSinkRecord_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_events_records_KafkaSinkRecord_fieldAccessorTable = new
+    internal_static_records_KafkaSinkRecord_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_events_records_KafkaSinkRecord_descriptor,
+        internal_static_records_KafkaSinkRecord_descriptor,
         new java.lang.String[] { "Topic", "Key", "Value", "Timestamp", "Offset", "Partition", });
   }
 

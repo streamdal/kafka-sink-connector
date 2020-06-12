@@ -11,9 +11,8 @@ import org.apache.kafka.connect.sink.SinkTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sh.batch.events.records.Kafka;
-import sh.batch.services.AddRecordsRequest;
-import sh.batch.services.GRPCCollectorGrpc;
-import sh.batch.services.GRPCCollectorGrpc.GRPCCollectorBlockingStub;
+import sh.batch.services.AddKafkaSinkRecordRequest;
+import sh.batch.services.KafkaSinkCollectorGrpc;
 
 import java.util.Collection;
 import java.util.Map;
@@ -22,7 +21,7 @@ public class BatchSinkTask extends SinkTask {
     private static final Logger log = LoggerFactory.getLogger(BatchSinkTask.class);
 
     private ManagedChannel channel;
-    private GRPCCollectorBlockingStub blockingStub;
+    private KafkaSinkCollectorGrpc.KafkaSinkCollectorBlockingStub blockingStub;
 
     public BatchSinkTask() {
     }
@@ -48,13 +47,13 @@ public class BatchSinkTask extends SinkTask {
                 .usePlaintext()
                 .build();
 
-        blockingStub = GRPCCollectorGrpc.newBlockingStub(channel);
+        blockingStub = KafkaSinkCollectorGrpc.newBlockingStub(channel);
     }
 
     @Override
     public void put(Collection<SinkRecord> records) {
 
-        AddRecordsRequest.Builder arr = AddRecordsRequest.newBuilder();
+        AddKafkaSinkRecordRequest.Builder arr = AddKafkaSinkRecordRequest.newBuilder();
 
         // the AddRecords RPC takes an array of KafkaSinkRecords so we have to
         // iterate through the ones we get and convert to our proto
@@ -75,7 +74,7 @@ public class BatchSinkTask extends SinkTask {
 
         // execute the RPC with the compiled list of records
         try {
-            blockingStub.addRecords(arr.build());
+            blockingStub.addRecord(arr.build());
         } catch (StatusRuntimeException e) {
             log.warn("RPC failed: {}", e.getStatus());
         }
