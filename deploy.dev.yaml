@@ -21,7 +21,7 @@ spec:
   selector:
     matchLabels:
       app: kafka-connect
-  replicas: 2 # tells deployment to run 2 pods matching the template
+  replicas: 2
   template:
     metadata:
       labels:
@@ -44,7 +44,11 @@ spec:
             - name: STATUS_STORAGE_TOPIC
               value: "connect-sandbox-status"
             - name: BOOTSTRAP_SERVERS
-              value: "kafka-sandbox-1.us-west-2.dev.batch.sh:9094,kafka-sandbox-2.us-west-2.dev.batch.sh:9094,kafka-sandbox-3.us-west-2.dev.batch.sh:9094"
+              value: "b-1.sandbox.5oabwj.c2.kafka.us-west-2.amazonaws.com:9094,b-2.sandbox.5oabwj.c2.kafka.us-west-2.amazonaws.com:9094,b-3.sandbox.5oabwj.c2.kafka.us-west-2.amazonaws.com:9094"
+            - name: REST_HOST_NAME
+              value: "0.0.0.0"
+            - name: CONNECT_SECURITY_PROTOCOL
+              value: "SSL"
           livenessProbe:
             httpGet:
               path: /
