@@ -49,6 +49,13 @@ spec:
               value: "0.0.0.0"
             - name: CONNECT_SECURITY_PROTOCOL
               value: "SSL"
+          resources:
+            requests:
+              memory: "3000Mi"
+              cpu: "2000m"
+            limits:
+              memory: "5000Mi"
+              cpu: "4000m"
           livenessProbe:
             httpGet:
               path: /
