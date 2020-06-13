@@ -47,8 +47,12 @@ spec:
               value: "b-1.sandbox.5oabwj.c2.kafka.us-west-2.amazonaws.com:9094,b-2.sandbox.5oabwj.c2.kafka.us-west-2.amazonaws.com:9094,b-3.sandbox.5oabwj.c2.kafka.us-west-2.amazonaws.com:9094"
             - name: REST_HOST_NAME
               value: "0.0.0.0"
+            - name: CONNECT_CONSUMER_SECURITY_PROTOCOL
+              value: "SSL"
             - name: CONNECT_SECURITY_PROTOCOL
               value: "SSL"
+            - name: HEAP_OPTS
+              value: "-Xmx3G -Xms3G"
           resources:
             requests:
               memory: "3000Mi"

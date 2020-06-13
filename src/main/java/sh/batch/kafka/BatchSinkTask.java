@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sh.batch.events.records.Kafka;
 import sh.batch.services.AddKafkaSinkRecordRequest;
+import sh.batch.services.AddKafkaSinkRecordResponse;
 import sh.batch.services.KafkaSinkCollectorGrpc;
 
 import java.util.Collection;
@@ -74,7 +75,8 @@ public class BatchSinkTask extends SinkTask {
 
         // execute the RPC with the compiled list of records
         try {
-            blockingStub.addRecord(arr.build());
+            AddKafkaSinkRecordResponse resp = blockingStub.addRecord(arr.build());
+            log.warn("RPC success: {}", resp.getStatus());
         } catch (StatusRuntimeException e) {
             log.warn("RPC failed: {}", e.getStatus());
         }
