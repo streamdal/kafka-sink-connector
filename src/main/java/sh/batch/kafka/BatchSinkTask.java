@@ -76,7 +76,6 @@ public class BatchSinkTask extends SinkTask {
         // execute the RPC with the compiled list of records
         try {
             AddKafkaSinkRecordResponse resp = blockingStub.addRecord(arr.build());
-            log.warn("RPC success: {}", resp.getStatus());
         } catch (StatusRuntimeException e) {
             log.warn("RPC failed: {}", e.getStatus());
         }
