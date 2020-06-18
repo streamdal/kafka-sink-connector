@@ -45,7 +45,6 @@ public class BatchSinkTask extends SinkTask {
 
         channel = ManagedChannelBuilder.forTarget(batchCollector)
                 .intercept(MetadataUtils.newAttachHeadersInterceptor(metadata))
-                .usePlaintext()
                 .build();
 
         blockingStub = KafkaSinkCollectorGrpc.newBlockingStub(channel);
