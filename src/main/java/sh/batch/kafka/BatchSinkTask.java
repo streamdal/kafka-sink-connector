@@ -41,8 +41,8 @@ import java.util.Map;
 public class BatchSinkTask extends SinkTask {
     private static final Logger log = LoggerFactory.getLogger(BatchSinkTask.class);
 
-    private ManagedChannel channel;
-    private KafkaSinkCollectorGrpc.KafkaSinkCollectorBlockingStub blockingStub;
+    protected ManagedChannel channel;
+    protected KafkaSinkCollectorGrpc.KafkaSinkCollectorBlockingStub blockingStub;
 
     public BatchSinkTask() {
     }
@@ -82,8 +82,11 @@ public class BatchSinkTask extends SinkTask {
                     .setValue(ByteString.copyFrom((byte[])record.value()))
                     .setTopic(record.topic())
                     .setPartition(record.kafkaPartition())
-                    .setOffset(record.kafkaOffset())
-                    .setTimestamp(record.timestamp());
+                    .setOffset(record.kafkaOffset());
+
+            if (record.timestamp() != null) {
+                ksr.setTimestamp(record.timestamp());
+            }
 
             if (record.key() != null) {
                 ksr.setKey(ByteString.copyFrom((byte[])record.key()));
@@ -95,6 +98,7 @@ public class BatchSinkTask extends SinkTask {
         // execute the RPC with the compiled list of records
         try {
             AddKafkaSinkRecordResponse resp = blockingStub.addRecord(arr.build());
+            log.info("{} records processed", resp.getNumRecordsProcessed());
         } catch (StatusRuntimeException e) {
             log.warn("RPC failed: {}", e.getStatus());
         }

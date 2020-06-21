@@ -21,21 +21,35 @@ package sh.batch.kafka;
  */
 
 
+import org.apache.kafka.connect.errors.ConnectException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BatchSinkConnectorTest {
 
+    private Map<String, String> inputs = new HashMap<>();
+    private BatchSinkConnector sc;
+
+    @BeforeEach
+    void beforeEach() {
+        sc = new BatchSinkConnector();
+        inputs.put("batch.token", "foobar");
+    }
+
+    @AfterEach
+    void afterEach() {
+        inputs.clear();
+    }
+
     @Test
     void testStart() {
-        BatchSinkConnector sc = new BatchSinkConnector();
-        HashMap<String, String> inputs = new HashMap<>();
-
-        inputs.put(BatchSinkConnectorConfig.TOKEN, "foobar");
-
         sc.start(inputs);
 
         assertEquals( "foobar",
@@ -44,22 +58,39 @@ class BatchSinkConnectorTest {
     }
 
     @Test
+    void shouldNotStartIfConfigInvalid() {
+        inputs.clear();
+
+        Exception ex = assertThrows(ConnectException.class, () -> {
+            sc.start(inputs);
+        });
+
+        assertTrue(ex.getMessage().contains("Couldn't start BatchSinkConnector due to configuration error"));
+    }
+
+    @Test
     void taskClass() {
+        assertSame(BatchSinkTask.class, sc.taskClass());
     }
 
     @Test
     void taskConfigs() {
-    }
+        int numTasks = 5;
 
-    @Test
-    void stop() {
-    }
+        // start the sink collector with some inputs
+        // it should output a map with those inputs as configs for each task workers * numTasks
+        inputs.put("foo", "bar");
+        sc.start(inputs);
 
-    @Test
-    void config() {
-    }
+        List<Map<String,String>> tconfs = sc.taskConfigs(numTasks);
 
-    @Test
-    void version() {
+        assertEquals(numTasks, tconfs.size());
+        assertEquals("bar", tconfs.get(0).get("foo"));
+
+        // all task configs should have the key and value converters set by us
+        for (Map<String, String> config : tconfs) {
+            assertEquals("ByteArrayConverter", config.get("key.converter"));
+            assertEquals("ByteArrayConverter", config.get("value.converter"));
+        }
     }
 }

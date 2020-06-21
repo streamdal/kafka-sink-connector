@@ -20,5 +20,71 @@ package sh.batch.kafka;
  * #L%
  */
 
+import org.apache.kafka.common.config.ConfigException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 public class BatchSinkConnectorConfigTest {
+
+    private Map<String, String> props = new HashMap<>();
+    private BatchSinkConnectorConfig config;
+
+    @BeforeEach
+    public void beforeEach() {
+        props.put("batch.token", "foobar"); // bare minimum
+    }
+
+    @AfterEach
+    public void afterEach() {
+        props.clear();
+        config = null;
+    }
+
+    @Test
+    void shouldCreateConfigWithMinimalInput() {
+        config = new BatchSinkConnectorConfig(props);
+        assertEquals("foobar", config.getString("batch.token"));
+        assertEquals("kafka-sink-collector.dev.batch.sh:9000", config.getString("batch.collector"));
+    }
+
+    @Test
+    void shouldErrorWhenLicenseKeyIsEmpty() {
+        props.clear();
+
+        Exception ex = assertThrows(ConfigException.class, () -> {
+            config = new BatchSinkConnectorConfig(props);
+        });
+
+        assertEquals("Missing required configuration \"batch.token\" which has no default value.", ex.getMessage());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", "127.0.0.1", "google.com", "kafka"})
+    void shouldErrorWhenCollectorURLIsInvalid(String url) {
+        props.put("batch.collector", url);
+
+        Exception ex = assertThrows(ConfigException.class, () -> {
+            config = new BatchSinkConnectorConfig(props);
+        });
+
+        assertTrue(ex.getMessage().contains(String.format("Invalid value %s for configuration batch.collector", url)));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"127.0.0.1:9000", "google.com:19191", "https://flavortown.com:1234", "grpc://batch.sh:443"})
+    void shouldCreateConfigWhenInputCollectorURLIsValid(String url) {
+        props.put("batch.collector", url);
+
+        config = new BatchSinkConnectorConfig(props);
+
+        assertEquals(url, config.getString("batch.collector"));
+    }
 }

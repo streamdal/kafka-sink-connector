@@ -22,7 +22,6 @@ package sh.batch.kafka;
 
 import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.common.config.ConfigException;
-import org.apache.kafka.common.utils.AppInfoParser;
 import org.apache.kafka.connect.connector.Task;
 import org.apache.kafka.connect.errors.ConnectException;
 import org.apache.kafka.connect.sink.SinkConnector;
@@ -38,6 +37,11 @@ public class BatchSinkConnector extends SinkConnector {
     @Override
     public void start(Map<String, String> props) {
         try {
+            // Right away override the key and value converters since our connector should always serve
+            // as a pass through up the collector service where data conversion is handled
+            props.put("key.converter", "ByteArrayConverter");
+            props.put("value.converter", "ByteArrayConverter");
+
             configProperties = props;
             new BatchSinkConnectorConfig(props);
         } catch (ConfigException e) {
@@ -55,7 +59,6 @@ public class BatchSinkConnector extends SinkConnector {
         List<Map<String, String>> taskConfigs = new ArrayList<>();
         Map<String, String> taskProps = new HashMap<>(configProperties);
 
-        taskProps.putAll(configProperties);
         for (int i = 0; i < maxTasks; i++) {
             taskConfigs.add(taskProps);
         }
@@ -74,6 +77,6 @@ public class BatchSinkConnector extends SinkConnector {
 
     @Override
     public String version() {
-        return AppInfoParser.getVersion();
+        return BatchSinkConnector.class.getPackage().getImplementationVersion();
     }
 }

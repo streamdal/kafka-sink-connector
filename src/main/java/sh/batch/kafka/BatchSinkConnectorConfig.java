@@ -39,11 +39,11 @@ public class BatchSinkConnectorConfig extends AbstractConfig {
         super(configDef(), originals);
     }
 
-    protected static ConfigDef configDef() {
+    public static ConfigDef configDef() {
         return new ConfigDef()
                 .define(TOKEN,
                         ConfigDef.Type.STRING,
-                        null,
+                        ConfigDef.NO_DEFAULT_VALUE,
                         new ConfigDef.NonEmptyString(),
                         ConfigDef.Importance.HIGH,
                         TOKEN_DOC)
@@ -51,16 +51,33 @@ public class BatchSinkConnectorConfig extends AbstractConfig {
                 .define(COLLECTOR_ADDRESS,
                         ConfigDef.Type.STRING,
                         "kafka-sink-collector.dev.batch.sh:9000",
-                        (name, value) -> {
-                            String strVal = value.toString();
-                            try {
-                                new URI(strVal);
-                            } catch (URISyntaxException e) {
-                                throw new ConfigException(e.getMessage());
-
-                            }
-                        },
+                        new CollectorURIValidator(),
                         ConfigDef.Importance.HIGH,
                         COLLECT_ADDRESS_DOC);
+    }
+
+    private static class CollectorURIValidator implements ConfigDef.Validator {
+        @Override
+        public void ensureValid(String key, Object value) {
+            String s = (String) value;
+            try {
+                if (!s.contains("://")) {
+                    s = "my://" + s;
+                }
+
+                URI uri = new URI(s.trim());
+                if (uri.getHost() == null || uri.getPort() == -1) {
+                    throw new ConfigException(key, value,
+                            "collector address must be valid URI with host and port");
+                }
+            } catch (URISyntaxException e) {
+                throw new ConfigException(key, value, e.getMessage());
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "valid URI with host and port";
+        }
     }
 }
