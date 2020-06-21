@@ -21,7 +21,7 @@ spec:
   selector:
     matchLabels:
       app: kafka-connect
-  replicas: 2
+  replicas: 3
   template:
     metadata:
       labels:

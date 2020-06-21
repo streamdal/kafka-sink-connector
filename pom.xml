@@ -4,6 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <organization>
+        <name>Batch.sh</name>
+        <url>http://batch.sh</url>
+    </organization>
+    <inceptionYear>2020</inceptionYear>
+
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -60,6 +66,14 @@
                 </executions>
             </plugin>
             <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>license-maven-plugin</artifactId>
+            <version>2.0.0</version>
+            <configuration>
+                <licenseName>apache_v2</licenseName>
+            </configuration>
+            </plugin>
+            <plugin>
                 <groupId>io.confluent</groupId>
                 <version>0.11.3</version>
                 <artifactId>kafka-connect-maven-plugin</artifactId>
@@ -70,6 +84,7 @@
                         </goals>
                         <configuration>
                             <title>Batch.sh Kafka Sink Connector</title>
+                            <name>batchsh-kafka-sink-connector</name>
                             <documentationUrl>
                                 https://docs.batch.sh/manuals/user-guide/kafka-sink-connector.html
                             </documentationUrl>
@@ -93,11 +108,15 @@
                                 <tag>search</tag>
                                 <tag>replay</tag>
                             </tags>
-                            <confluentControlCenterIntegration>true
+                            <confluentControlCenterIntegration>
+                                true
                             </confluentControlCenterIntegration>
-                            <singleMessageTransforms>false
+                            <singleMessageTransforms>
+                                false
                             </singleMessageTransforms>
-                            <supportedEncodings>UTF-8</supportedEncodings>
+                            <supportedEncodings>
+                                UTF-8
+                            </supportedEncodings>
                         </configuration>
                     </execution>
                 </executions>
@@ -173,4 +192,12 @@
             <url>https://maven.pkg.github.com/batchcorp/kafka-sink-connector</url>
         </repository>
     </distributionManagement>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>manual</distribution>
+        </license>
+    </licenses>
 </project>
