@@ -35,6 +35,9 @@ public class BatchSinkConnectorConfig extends AbstractConfig {
     public static final String COLLECTOR_ADDRESS = "batch.collector";
     private static final String COLLECT_ADDRESS_DOC = "'host:port' of the batch.sh collector service (default: kafka-sink-collector.batch.sh:9000)";
 
+    public static final String DISABLE_TLS = "batch.collector.disable.tls";
+    private static final String DISABLE_TLS_DOC = "default: false; if true the grpc collector client will use a plaintext connection";
+
     public BatchSinkConnectorConfig(Map originals) {
         super(configDef(), originals);
     }
@@ -53,7 +56,13 @@ public class BatchSinkConnectorConfig extends AbstractConfig {
                         "kafka-sink-collector.dev.batch.sh:9000",
                         new CollectorURIValidator(),
                         ConfigDef.Importance.HIGH,
-                        COLLECT_ADDRESS_DOC);
+                        COLLECT_ADDRESS_DOC)
+
+                .define(DISABLE_TLS,
+                        ConfigDef.Type.BOOLEAN,
+                        false,
+                        ConfigDef.Importance.HIGH,
+                        DISABLE_TLS_DOC);
     }
 
     private static class CollectorURIValidator implements ConfigDef.Validator {

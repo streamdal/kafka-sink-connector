@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"context"
-	"crypto/tls"
+	//"crypto/tls"
 	"sync"
 	"time"
 
@@ -11,7 +11,8 @@ import (
 )
 
 var (
-	brokers = []string{"b-2.sandbox.5oabwj.c2.kafka.us-west-2.amazonaws.com:9094","b-3.sandbox.5oabwj.c2.kafka.us-west-2.amazonaws.com:9094","b-1.sandbox.5oabwj.c2.kafka.us-west-2.amazonaws.com:9094"}
+	//brokers = []string{"b-2.sandbox.5oabwj.c2.kafka.us-west-2.amazonaws.com:9094","b-3.sandbox.5oabwj.c2.kafka.us-west-2.amazonaws.com:9094","b-1.sandbox.5oabwj.c2.kafka.us-west-2.amazonaws.com:9094"}
+	brokers = []string{"localhost:9092"}
 	topic = "inbound"
 )
 
@@ -20,9 +21,9 @@ func main() {
 	dialer := &kafka.Dialer{
 		Timeout:   10 * time.Second,
 		DualStack: true,
-		TLS:       &tls.Config{
-			InsecureSkipVerify: true,
-		},
+		// TLS:       &tls.Config{
+		// 	InsecureSkipVerify: true,
+		// },
 	}
 
 	var wg sync.WaitGroup
@@ -34,7 +35,7 @@ func main() {
 		Dialer: dialer,
 	})
 
-	for i := 0; i < 50000; i++ {
+	for i := 0; i < 1; i++ {
 		wg.Add(1)
 		i := i
 		go func(i int, wg *sync.WaitGroup){

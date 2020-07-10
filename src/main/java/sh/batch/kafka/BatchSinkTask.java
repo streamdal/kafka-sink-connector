@@ -26,6 +26,8 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.Metadata;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.MetadataUtils;
+import org.apache.kafka.connect.errors.ConnectException;
+import org.apache.kafka.connect.errors.RetriableException;
 import org.apache.kafka.connect.sink.SinkRecord;
 import org.apache.kafka.connect.sink.SinkTask;
 import org.slf4j.Logger;
@@ -43,6 +45,10 @@ public class BatchSinkTask extends SinkTask {
 
     protected ManagedChannel channel;
     protected KafkaSinkCollectorGrpc.KafkaSinkCollectorBlockingStub blockingStub;
+    protected String taskID;
+
+    private final int maxRetries = 3;
+    private int remainingRetries;
 
     public BatchSinkTask() {
     }
@@ -56,6 +62,8 @@ public class BatchSinkTask extends SinkTask {
     public void start(Map<String, String> params) {
         String collectionToken = params.get(BatchSinkConnectorConfig.TOKEN);
         String batchCollector = params.get(BatchSinkConnectorConfig.COLLECTOR_ADDRESS);
+        taskID = params.get("task_id");
+        boolean disableTLS = Boolean.parseBoolean(params.get(BatchSinkConnectorConfig.DISABLE_TLS));
 
         // create the channel for our grpc connection
         // put the client collection key into the request metadata
@@ -63,15 +71,26 @@ public class BatchSinkTask extends SinkTask {
         Metadata.Key<String> tokenMetadataKey = Metadata.Key.of("batch.token", Metadata.ASCII_STRING_MARSHALLER);
         metadata.put(tokenMetadataKey, collectionToken);
 
-        channel = ManagedChannelBuilder.forTarget(batchCollector)
-                .intercept(MetadataUtils.newAttachHeadersInterceptor(metadata))
-                .build();
+        ManagedChannelBuilder<?> channelBuilder = ManagedChannelBuilder.forTarget(batchCollector)
+                .intercept(MetadataUtils.newAttachHeadersInterceptor(metadata));
+
+        // for local dev
+        if (disableTLS) {
+            channelBuilder.usePlaintext();
+        }
+
+        channel = channelBuilder.build();
 
         blockingStub = KafkaSinkCollectorGrpc.newBlockingStub(channel);
+
+        remainingRetries = maxRetries;
     }
 
     @Override
     public void put(Collection<SinkRecord> records) {
+        if (records.isEmpty()) {
+            return;
+        }
 
         AddKafkaSinkRecordRequest.Builder arr = AddKafkaSinkRecordRequest.newBuilder();
 
@@ -100,13 +119,35 @@ public class BatchSinkTask extends SinkTask {
             AddKafkaSinkRecordResponse resp = blockingStub.addRecord(arr.build());
             log.info("{} records processed", resp.getNumRecordsProcessed());
         } catch (StatusRuntimeException e) {
-            log.warn("RPC failed: {}", e.getStatus());
+            String errMessage = String.format("RPC failed: %s", e.getStatus());
+            log.error(errMessage);
+            BatchSinkConnector.putTaskError(taskID, errMessage);
+
+            if (remainingRetries == 0) {
+                throw new ConnectException(e);
+            } else {
+                remainingRetries--;
+                throw new RetriableException(e);
+            }
+        } catch (Throwable e) {
+            log.error(e.getMessage());
+            BatchSinkConnector.putTaskError(taskID, e.getMessage());
+
+            if (remainingRetries == 0) {
+                throw new ConnectException(e);
+            } else {
+                remainingRetries--;
+                throw new RetriableException(e);
+            }
         }
 
+        remainingRetries = maxRetries;
     }
 
     @Override
     public void stop() {
-        channel.shutdown();
+        if (!channel.isShutdown()) {
+            channel.shutdown();
+        }
     }
 }

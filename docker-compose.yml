@@ -1,7 +1,7 @@
 version: '3'
 services:
-  kafka:
-    image: "lensesio/fast-data-dev"
+  dev:
+    image: lensesio/fast-data-dev
     environment:
       ADV_HOST: 127.0.0.1
     ports:

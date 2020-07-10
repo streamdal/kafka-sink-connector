@@ -89,8 +89,8 @@ class BatchSinkConnectorTest {
 
         // all task configs should have the key and value converters set by us
         for (Map<String, String> config : tconfs) {
-            assertEquals("ByteArrayConverter", config.get("key.converter"));
-            assertEquals("ByteArrayConverter", config.get("value.converter"));
+            assertEquals("org.apache.kafka.connect.converters.ByteArrayConverter", config.get("key.converter"));
+            assertEquals("org.apache.kafka.connect.converters.ByteArrayConverter", config.get("value.converter"));
         }
     }
 }
