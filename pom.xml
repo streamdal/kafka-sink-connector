@@ -15,7 +15,7 @@
 
     <groupId>sh.batch.kafka</groupId>
     <artifactId>sink-connector</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <distributionManagement>
         <repository>
@@ -143,9 +143,8 @@
                             </documentationUrl>
                             <description>
                                 Batch.sh is where you can catalog, search, and replay your events.
-                                The Batch.sh Kafka sink connector lets you
-                                quickly and easily move messages from Kafka topics into the Batch.sh
-                                cloud collectors.
+                                The Batch.sh Kafka sink connector lets you quickly and easily move messages from Kafka
+                                topics into the Batch.sh cloud collectors.
                             </description>
 
                             <ownerUsername>batchsh</ownerUsername>
@@ -158,6 +157,16 @@
                             <componentTypes>
                                 <componentType>sink</componentType>
                             </componentTypes>
+
+                            <supportLogo>assets/logo.png</supportLogo>
+                            <supportProviderName>Batch.sh</supportProviderName>
+                            <supportUrl>https://github.com/batchcorp/kafka-sink-connector/issues</supportUrl>
+                            <supportSummary>
+                                This connector is an open-source tool provided by batch and supported alongside community members.
+                                All bug reports and inquiries should be made via GitHub issues on the connector's
+                                official repository.
+                            </supportSummary>
+
                             <tags>
                                 <tag>batch</tag>
                                 <tag>search</tag>
@@ -173,12 +182,6 @@
                             <confluentControlCenterIntegration>
                                 true
                             </confluentControlCenterIntegration>
-                            <singleMessageTransforms>
-                                false
-                            </singleMessageTransforms>
-                            <supportedEncodings>
-                                UTF-8
-                            </supportedEncodings>
                         </configuration>
                     </execution>
                 </executions>
