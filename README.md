@@ -29,7 +29,9 @@ These events can then be queried and replayed at target destinations.
 
 ### Confluent
 
-1. Download the connector ZIP archive from the official [releases](https://github.com/batchcorp/kafka-sink-connector/releases/)
+1. Download the connector ZIP archive from:
+    * [Confluent Hub](https://www.confluent.io/hub/batchsh/sink-connector)
+    * the official [releases](https://github.com/batchcorp/kafka-sink-connector/releases/)
 2. Follow confluent-platform's guide on installing custom connectors using that file
     * https://docs.confluent.io/current/connect/userguide.html#connect-installing-plugins
 
@@ -102,6 +104,11 @@ Unique name for the connector. Attempting to register again with the same name w
 
 `sh.batch.kafka.BatchSinkConnector`
 ___
+**tasks.max**
+
+Maximum number of tasks to use for this connector. Tasks act as consumer threads for Connect workers so tune this setting
+to be in line with a typical consumer group for the configured topic(s).
+---
 **batch.token**
 
 The ID of the batch.sh collection that will be the destination for the events. The collection ID allows the collector service
@@ -131,19 +138,14 @@ Regular expression giving topics to consume. Under the hood, the regex is compil
 > its own data conversion then the resulting byte array sent to the collector is no longer the untainted data sent originally by the
 > producer. No matter what data type your records are (Avro, Protobuf, etc) ALWAYS choose the ByteArray converter and let the collector
 > resolve the data with its own schemas. 
-___
 
-#### Optional
 
----
-**tasks.max**
+# Error Handling
 
-Maximum number of tasks to use for this connector. Tasks act as consumer threads for Connect workers so tune this setting
-to be in line with a typical consumer group for the configured topic(s).
-
----
-**errors.retry.timeout**
-
-The maximum duration in milliseconds that a failed operation will be reattempted. The default is 0, which means no retries will be attempted. 
-Use -1 for infinite retries. See [Error Handling](#Error-Handling) section below.
-___
+The connector attempts to retry errors indefinitely. It priotizes messages being delivered
+so if for some reason records cannot be processed then by default it will block send records, retrying about once a minute until
+records can be sent again. Due to the configurable nature of Kafka Connect, it is possible to tune some of this behavior by
+introducing [dead letter queues](https://www.confluent.io/blog/kafka-connect-deep-dive-error-handling-dead-letter-queues/)
+or modifying the other error parameters but our recommendation is to leave these unset. Given the connector is a passthrough 
+for any raw data the only time it is expected to see processing errors under normal operation is a remote collector outage. 
+In that scenario, letting the connector retry until the collector service is back online is recommended. 
