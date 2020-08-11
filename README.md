@@ -108,6 +108,7 @@ ___
 
 Maximum number of tasks to use for this connector. Tasks act as consumer threads for Connect workers so tune this setting
 to be in line with a typical consumer group for the configured topic(s).
+
 ---
 **batch.token**
 
