@@ -42,8 +42,7 @@ func main() {
 			defer wg.Done()
 			err := w.WriteMessages(context.Background(),
 				kafka.Message{
-					Key:   []byte(fmt.Sprintf("Key-%d", i)),
-					Value: []byte(fmt.Sprintf("Value-%d", i)),
+					Value: []byte(`{"test": "test message"}`),
 				})
 			if err != nil {
 				panic(err)
