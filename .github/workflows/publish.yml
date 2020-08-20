@@ -1,7 +1,7 @@
 name: Create JAR and Sandbox Image
 on:
   push:
-    branches: [master]
+    branches: [dev]
 jobs:
   create-and-publish-jar:
     runs-on: ubuntu-latest
