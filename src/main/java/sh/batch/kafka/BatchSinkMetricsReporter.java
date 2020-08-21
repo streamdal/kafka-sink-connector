@@ -53,8 +53,11 @@ public class BatchSinkMetricsReporter implements Runnable {
 
     protected MBeanServer mbs;
 
+    private final String connectorName;
+
     public BatchSinkMetricsReporter(Map<String, String> params, CloseableHttpClient client) throws MalformedObjectNameException {
-        MBEAN_FILTER = new ObjectName(String.format(CONNECTOR_MBEANS, params.get(BatchSinkConnector.NAME)));
+        connectorName = params.get(BatchSinkConnector.NAME);
+        MBEAN_FILTER = new ObjectName(String.format(CONNECTOR_MBEANS, connectorName));
 
         this.httpClient = client;
         this.configProperties = params;
@@ -108,6 +111,8 @@ public class BatchSinkMetricsReporter implements Runnable {
 
         metrics.put("timestamp", Instant.now().getEpochSecond());
         metrics.put("stats", stats);
+        metrics.put("name", connectorName);
+        metrics.put("source", "kafka");
 
         // set errors as a snapshot of taskErrors then clear it for the next heartbeat
         metrics.put("errors", Collections.unmodifiableMap(taskErrors));
