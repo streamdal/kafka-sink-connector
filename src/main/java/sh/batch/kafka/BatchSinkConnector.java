@@ -64,7 +64,7 @@ public class BatchSinkConnector extends SinkConnector {
 
         configProperties.putIfAbsent(NAME, connectorName);
 
-        configProperties.put(BatchSinkConnectorConfig.COLLECTOR_ADDRESS, "kafka-sink-collector.dev.batch.sh:9000");
+        configProperties.put(BatchSinkConnectorConfig.COLLECTOR_ADDRESS, "grpc-collector.dev.batch.sh:9000");
         configProperties.put(BatchSinkConnectorConfig.METRICS_ADDRESS, "https://connector-metrics.dev.batch.sh:8787");
 
         // health check / metrics reporter

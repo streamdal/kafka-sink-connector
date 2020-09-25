@@ -3,26 +3,6 @@
 
 package sh.batch.events;
 
-/*-
- * #%L
- * sink-connector
- * %%
- * Copyright (C) 2020 Batch.sh
- * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * #L%
- */
-
 public final class ResponseStatus {
   private ResponseStatus() {}
   public static void registerAllExtensions(
@@ -45,7 +25,6 @@ public final class ResponseStatus {
      * </pre>
      *
      * <code>int32 code = 1;</code>
-     * @return The code.
      */
     int getCode();
 
@@ -56,7 +35,6 @@ public final class ResponseStatus {
      * </pre>
      *
      * <code>string message = 2;</code>
-     * @return The message.
      */
     java.lang.String getMessage();
     /**
@@ -66,7 +44,6 @@ public final class ResponseStatus {
      * </pre>
      *
      * <code>string message = 2;</code>
-     * @return The bytes for message.
      */
     com.google.protobuf.ByteString
         getMessageBytes();
@@ -84,14 +61,8 @@ public final class ResponseStatus {
       super(builder);
     }
     private Status() {
+      code_ = 0;
       message_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new Status();
     }
 
     @java.lang.Override
@@ -104,9 +75,7 @@ public final class ResponseStatus {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -117,6 +86,13 @@ public final class ResponseStatus {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
 
               code_ = input.readInt32();
@@ -126,13 +102,6 @@ public final class ResponseStatus {
               java.lang.String s = input.readStringRequireUtf8();
 
               message_ = s;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -152,7 +121,6 @@ public final class ResponseStatus {
       return sh.batch.events.ResponseStatus.internal_static_events_Status_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return sh.batch.events.ResponseStatus.internal_static_events_Status_fieldAccessorTable
@@ -169,7 +137,6 @@ public final class ResponseStatus {
      * </pre>
      *
      * <code>int32 code = 1;</code>
-     * @return The code.
      */
     public int getCode() {
       return code_;
@@ -184,7 +151,6 @@ public final class ResponseStatus {
      * </pre>
      *
      * <code>string message = 2;</code>
-     * @return The message.
      */
     public java.lang.String getMessage() {
       java.lang.Object ref = message_;
@@ -205,7 +171,6 @@ public final class ResponseStatus {
      * </pre>
      *
      * <code>string message = 2;</code>
-     * @return The bytes for message.
      */
     public com.google.protobuf.ByteString
         getMessageBytes() {
@@ -222,7 +187,6 @@ public final class ResponseStatus {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -232,7 +196,6 @@ public final class ResponseStatus {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (code_ != 0) {
@@ -244,7 +207,6 @@ public final class ResponseStatus {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -272,12 +234,13 @@ public final class ResponseStatus {
       }
       sh.batch.events.ResponseStatus.Status other = (sh.batch.events.ResponseStatus.Status) obj;
 
-      if (getCode()
-          != other.getCode()) return false;
-      if (!getMessage()
-          .equals(other.getMessage())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result && (getCode()
+          == other.getCode());
+      result = result && getMessage()
+          .equals(other.getMessage());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -366,7 +329,6 @@ public final class ResponseStatus {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -374,7 +336,6 @@ public final class ResponseStatus {
     public static Builder newBuilder(sh.batch.events.ResponseStatus.Status prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -398,7 +359,6 @@ public final class ResponseStatus {
         return sh.batch.events.ResponseStatus.internal_static_events_Status_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return sh.batch.events.ResponseStatus.internal_static_events_Status_fieldAccessorTable
@@ -421,7 +381,6 @@ public final class ResponseStatus {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         code_ = 0;
@@ -431,18 +390,15 @@ public final class ResponseStatus {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return sh.batch.events.ResponseStatus.internal_static_events_Status_descriptor;
       }
 
-      @java.lang.Override
       public sh.batch.events.ResponseStatus.Status getDefaultInstanceForType() {
         return sh.batch.events.ResponseStatus.Status.getDefaultInstance();
       }
 
-      @java.lang.Override
       public sh.batch.events.ResponseStatus.Status build() {
         sh.batch.events.ResponseStatus.Status result = buildPartial();
         if (!result.isInitialized()) {
@@ -451,7 +407,6 @@ public final class ResponseStatus {
         return result;
       }
 
-      @java.lang.Override
       public sh.batch.events.ResponseStatus.Status buildPartial() {
         sh.batch.events.ResponseStatus.Status result = new sh.batch.events.ResponseStatus.Status(this);
         result.code_ = code_;
@@ -460,39 +415,32 @@ public final class ResponseStatus {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof sh.batch.events.ResponseStatus.Status) {
           return mergeFrom((sh.batch.events.ResponseStatus.Status)other);
@@ -516,12 +464,10 @@ public final class ResponseStatus {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -548,7 +494,6 @@ public final class ResponseStatus {
        * </pre>
        *
        * <code>int32 code = 1;</code>
-       * @return The code.
        */
       public int getCode() {
         return code_;
@@ -560,8 +505,6 @@ public final class ResponseStatus {
        * </pre>
        *
        * <code>int32 code = 1;</code>
-       * @param value The code to set.
-       * @return This builder for chaining.
        */
       public Builder setCode(int value) {
         
@@ -576,7 +519,6 @@ public final class ResponseStatus {
        * </pre>
        *
        * <code>int32 code = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearCode() {
         
@@ -593,7 +535,6 @@ public final class ResponseStatus {
        * </pre>
        *
        * <code>string message = 2;</code>
-       * @return The message.
        */
       public java.lang.String getMessage() {
         java.lang.Object ref = message_;
@@ -614,7 +555,6 @@ public final class ResponseStatus {
        * </pre>
        *
        * <code>string message = 2;</code>
-       * @return The bytes for message.
        */
       public com.google.protobuf.ByteString
           getMessageBytes() {
@@ -636,8 +576,6 @@ public final class ResponseStatus {
        * </pre>
        *
        * <code>string message = 2;</code>
-       * @param value The message to set.
-       * @return This builder for chaining.
        */
       public Builder setMessage(
           java.lang.String value) {
@@ -656,7 +594,6 @@ public final class ResponseStatus {
        * </pre>
        *
        * <code>string message = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearMessage() {
         
@@ -671,8 +608,6 @@ public final class ResponseStatus {
        * </pre>
        *
        * <code>string message = 2;</code>
-       * @param value The bytes for message to set.
-       * @return This builder for chaining.
        */
       public Builder setMessageBytes(
           com.google.protobuf.ByteString value) {
@@ -685,13 +620,11 @@ public final class ResponseStatus {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -713,12 +646,11 @@ public final class ResponseStatus {
 
     private static final com.google.protobuf.Parser<Status>
         PARSER = new com.google.protobuf.AbstractParser<Status>() {
-      @java.lang.Override
       public Status parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Status(input, extensionRegistry);
+          return new Status(input, extensionRegistry);
       }
     };
 
@@ -731,7 +663,6 @@ public final class ResponseStatus {
       return PARSER;
     }
 
-    @java.lang.Override
     public sh.batch.events.ResponseStatus.Status getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -757,10 +688,18 @@ public final class ResponseStatus {
       "tsB\016ResponseStatusZ,github.com/batchcorp" +
       "/schemas/build/go/eventsb\006proto3"
     };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
+    com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
+        }, assigner);
     internal_static_events_Status_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_events_Status_fieldAccessorTable = new

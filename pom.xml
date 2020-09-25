@@ -15,7 +15,7 @@
 
     <groupId>sh.batch.kafka</groupId>
     <artifactId>sink-connector</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.2-SNAPSHOT</version>
 
     <distributionManagement>
         <repository>

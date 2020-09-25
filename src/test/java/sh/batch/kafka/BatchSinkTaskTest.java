@@ -36,10 +36,9 @@ import org.junit.Rule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sh.batch.services.AddKafkaSinkRecordRequest;
-import sh.batch.services.AddKafkaSinkRecordResponse;
-import sh.batch.services.KafkaSinkCollectorGrpc;
-import sh.batch.services.KafkaSinkCollectorGrpc.KafkaSinkCollectorImplBase;
+import sh.batch.services.GRPCCollectorGrpc;
+import sh.batch.services.KafkaSinkRecordRequest;
+import sh.batch.services.KafkaSinkRecordResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,7 +79,7 @@ public class BatchSinkTaskTest {
         task = new BatchSinkTask();
 
         task.channel = channel;
-        task.blockingStub = KafkaSinkCollectorGrpc.newBlockingStub(channel);
+        task.blockingStub = GRPCCollectorGrpc.newBlockingStub(channel);
 
         SinkRecord fooRecord = new SinkRecord("foo-topic-1",
                 1,
@@ -116,13 +115,13 @@ public class BatchSinkTaskTest {
         final AtomicReference<Integer> numRecords = new AtomicReference<>(0);
 
         // mock happy path
-        KafkaSinkCollectorImplBase addRecordImpl = new KafkaSinkCollectorImplBase() {
+        GRPCCollectorGrpc.GRPCCollectorImplBase addRecordImpl = new GRPCCollectorGrpc.GRPCCollectorImplBase() {
             @Override
-            public void addRecord(AddKafkaSinkRecordRequest request,
-                                  StreamObserver<AddKafkaSinkRecordResponse> responseObserver) {
+            public void addKafkaRecord(KafkaSinkRecordRequest request,
+                                       StreamObserver<KafkaSinkRecordResponse> responseObserver) {
 
                 numRecords.set(request.getRecordsCount());
-                responseObserver.onNext(AddKafkaSinkRecordResponse.newBuilder().setNumRecordsProcessed(request.getRecordsCount()).build());
+                responseObserver.onNext(KafkaSinkRecordResponse.newBuilder().setNumRecordsProcessed(request.getRecordsCount()).build());
                 responseObserver.onCompleted();
             }
         };
@@ -138,10 +137,10 @@ public class BatchSinkTaskTest {
         final StatusRuntimeException fakeError = new StatusRuntimeException(Status.DATA_LOSS);
 
         // mock an error happening
-        KafkaSinkCollectorImplBase addRecordImpl = new KafkaSinkCollectorImplBase() {
+        GRPCCollectorGrpc.GRPCCollectorImplBase addRecordImpl = new GRPCCollectorGrpc.GRPCCollectorImplBase() {
             @Override
-            public void addRecord(AddKafkaSinkRecordRequest request,
-                                  StreamObserver<AddKafkaSinkRecordResponse> responseObserver) {
+            public void addKafkaRecord(KafkaSinkRecordRequest request,
+                                  StreamObserver<KafkaSinkRecordResponse> responseObserver) {
 
                 numRecords.set(request.getRecordsCount());
                 responseObserver.onError(fakeError);
