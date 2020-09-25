@@ -3,26 +3,6 @@
 
 package sh.batch.events.records;
 
-/*-
- * #%L
- * sink-connector
- * %%
- * Copyright (C) 2020 Batch.sh
- * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * #L%
- */
-
 public final class Kafka {
   private Kafka() {}
   public static void registerAllExtensions(
@@ -40,43 +20,36 @@ public final class Kafka {
 
     /**
      * <code>string topic = 1;</code>
-     * @return The topic.
      */
     java.lang.String getTopic();
     /**
      * <code>string topic = 1;</code>
-     * @return The bytes for topic.
      */
     com.google.protobuf.ByteString
         getTopicBytes();
 
     /**
      * <code>bytes key = 2;</code>
-     * @return The key.
      */
     com.google.protobuf.ByteString getKey();
 
     /**
      * <code>bytes value = 3;</code>
-     * @return The value.
      */
     com.google.protobuf.ByteString getValue();
 
     /**
      * <code>int64 timestamp = 4;</code>
-     * @return The timestamp.
      */
     long getTimestamp();
 
     /**
      * <code>int64 offset = 5;</code>
-     * @return The offset.
      */
     long getOffset();
 
     /**
      * <code>int32 partition = 6;</code>
-     * @return The partition.
      */
     int getPartition();
   }
@@ -96,13 +69,9 @@ public final class Kafka {
       topic_ = "";
       key_ = com.google.protobuf.ByteString.EMPTY;
       value_ = com.google.protobuf.ByteString.EMPTY;
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new KafkaSinkRecord();
+      timestamp_ = 0L;
+      offset_ = 0L;
+      partition_ = 0;
     }
 
     @java.lang.Override
@@ -115,9 +84,7 @@ public final class Kafka {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -128,6 +95,13 @@ public final class Kafka {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
@@ -159,13 +133,6 @@ public final class Kafka {
               partition_ = input.readInt32();
               break;
             }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -183,7 +150,6 @@ public final class Kafka {
       return sh.batch.events.records.Kafka.internal_static_records_KafkaSinkRecord_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return sh.batch.events.records.Kafka.internal_static_records_KafkaSinkRecord_fieldAccessorTable
@@ -195,7 +161,6 @@ public final class Kafka {
     private volatile java.lang.Object topic_;
     /**
      * <code>string topic = 1;</code>
-     * @return The topic.
      */
     public java.lang.String getTopic() {
       java.lang.Object ref = topic_;
@@ -211,7 +176,6 @@ public final class Kafka {
     }
     /**
      * <code>string topic = 1;</code>
-     * @return The bytes for topic.
      */
     public com.google.protobuf.ByteString
         getTopicBytes() {
@@ -231,7 +195,6 @@ public final class Kafka {
     private com.google.protobuf.ByteString key_;
     /**
      * <code>bytes key = 2;</code>
-     * @return The key.
      */
     public com.google.protobuf.ByteString getKey() {
       return key_;
@@ -241,7 +204,6 @@ public final class Kafka {
     private com.google.protobuf.ByteString value_;
     /**
      * <code>bytes value = 3;</code>
-     * @return The value.
      */
     public com.google.protobuf.ByteString getValue() {
       return value_;
@@ -251,7 +213,6 @@ public final class Kafka {
     private long timestamp_;
     /**
      * <code>int64 timestamp = 4;</code>
-     * @return The timestamp.
      */
     public long getTimestamp() {
       return timestamp_;
@@ -261,7 +222,6 @@ public final class Kafka {
     private long offset_;
     /**
      * <code>int64 offset = 5;</code>
-     * @return The offset.
      */
     public long getOffset() {
       return offset_;
@@ -271,14 +231,12 @@ public final class Kafka {
     private int partition_;
     /**
      * <code>int32 partition = 6;</code>
-     * @return The partition.
      */
     public int getPartition() {
       return partition_;
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -288,7 +246,6 @@ public final class Kafka {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!getTopicBytes().isEmpty()) {
@@ -312,7 +269,6 @@ public final class Kafka {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -356,20 +312,21 @@ public final class Kafka {
       }
       sh.batch.events.records.Kafka.KafkaSinkRecord other = (sh.batch.events.records.Kafka.KafkaSinkRecord) obj;
 
-      if (!getTopic()
-          .equals(other.getTopic())) return false;
-      if (!getKey()
-          .equals(other.getKey())) return false;
-      if (!getValue()
-          .equals(other.getValue())) return false;
-      if (getTimestamp()
-          != other.getTimestamp()) return false;
-      if (getOffset()
-          != other.getOffset()) return false;
-      if (getPartition()
-          != other.getPartition()) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result && getTopic()
+          .equals(other.getTopic());
+      result = result && getKey()
+          .equals(other.getKey());
+      result = result && getValue()
+          .equals(other.getValue());
+      result = result && (getTimestamp()
+          == other.getTimestamp());
+      result = result && (getOffset()
+          == other.getOffset());
+      result = result && (getPartition()
+          == other.getPartition());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
     @java.lang.Override
@@ -468,7 +425,6 @@ public final class Kafka {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -476,7 +432,6 @@ public final class Kafka {
     public static Builder newBuilder(sh.batch.events.records.Kafka.KafkaSinkRecord prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -500,7 +455,6 @@ public final class Kafka {
         return sh.batch.events.records.Kafka.internal_static_records_KafkaSinkRecord_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return sh.batch.events.records.Kafka.internal_static_records_KafkaSinkRecord_fieldAccessorTable
@@ -523,7 +477,6 @@ public final class Kafka {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         topic_ = "";
@@ -541,18 +494,15 @@ public final class Kafka {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return sh.batch.events.records.Kafka.internal_static_records_KafkaSinkRecord_descriptor;
       }
 
-      @java.lang.Override
       public sh.batch.events.records.Kafka.KafkaSinkRecord getDefaultInstanceForType() {
         return sh.batch.events.records.Kafka.KafkaSinkRecord.getDefaultInstance();
       }
 
-      @java.lang.Override
       public sh.batch.events.records.Kafka.KafkaSinkRecord build() {
         sh.batch.events.records.Kafka.KafkaSinkRecord result = buildPartial();
         if (!result.isInitialized()) {
@@ -561,7 +511,6 @@ public final class Kafka {
         return result;
       }
 
-      @java.lang.Override
       public sh.batch.events.records.Kafka.KafkaSinkRecord buildPartial() {
         sh.batch.events.records.Kafka.KafkaSinkRecord result = new sh.batch.events.records.Kafka.KafkaSinkRecord(this);
         result.topic_ = topic_;
@@ -574,39 +523,32 @@ public final class Kafka {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
-        return super.clone();
+        return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.setField(field, value);
+        return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
+        return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
+        return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
+        return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof sh.batch.events.records.Kafka.KafkaSinkRecord) {
           return mergeFrom((sh.batch.events.records.Kafka.KafkaSinkRecord)other);
@@ -642,12 +584,10 @@ public final class Kafka {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -669,7 +609,6 @@ public final class Kafka {
       private java.lang.Object topic_ = "";
       /**
        * <code>string topic = 1;</code>
-       * @return The topic.
        */
       public java.lang.String getTopic() {
         java.lang.Object ref = topic_;
@@ -685,7 +624,6 @@ public final class Kafka {
       }
       /**
        * <code>string topic = 1;</code>
-       * @return The bytes for topic.
        */
       public com.google.protobuf.ByteString
           getTopicBytes() {
@@ -702,8 +640,6 @@ public final class Kafka {
       }
       /**
        * <code>string topic = 1;</code>
-       * @param value The topic to set.
-       * @return This builder for chaining.
        */
       public Builder setTopic(
           java.lang.String value) {
@@ -717,7 +653,6 @@ public final class Kafka {
       }
       /**
        * <code>string topic = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearTopic() {
         
@@ -727,8 +662,6 @@ public final class Kafka {
       }
       /**
        * <code>string topic = 1;</code>
-       * @param value The bytes for topic to set.
-       * @return This builder for chaining.
        */
       public Builder setTopicBytes(
           com.google.protobuf.ByteString value) {
@@ -745,15 +678,12 @@ public final class Kafka {
       private com.google.protobuf.ByteString key_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>bytes key = 2;</code>
-       * @return The key.
        */
       public com.google.protobuf.ByteString getKey() {
         return key_;
       }
       /**
        * <code>bytes key = 2;</code>
-       * @param value The key to set.
-       * @return This builder for chaining.
        */
       public Builder setKey(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -766,7 +696,6 @@ public final class Kafka {
       }
       /**
        * <code>bytes key = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearKey() {
         
@@ -778,15 +707,12 @@ public final class Kafka {
       private com.google.protobuf.ByteString value_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>bytes value = 3;</code>
-       * @return The value.
        */
       public com.google.protobuf.ByteString getValue() {
         return value_;
       }
       /**
        * <code>bytes value = 3;</code>
-       * @param value The value to set.
-       * @return This builder for chaining.
        */
       public Builder setValue(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -799,7 +725,6 @@ public final class Kafka {
       }
       /**
        * <code>bytes value = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearValue() {
         
@@ -811,15 +736,12 @@ public final class Kafka {
       private long timestamp_ ;
       /**
        * <code>int64 timestamp = 4;</code>
-       * @return The timestamp.
        */
       public long getTimestamp() {
         return timestamp_;
       }
       /**
        * <code>int64 timestamp = 4;</code>
-       * @param value The timestamp to set.
-       * @return This builder for chaining.
        */
       public Builder setTimestamp(long value) {
         
@@ -829,7 +751,6 @@ public final class Kafka {
       }
       /**
        * <code>int64 timestamp = 4;</code>
-       * @return This builder for chaining.
        */
       public Builder clearTimestamp() {
         
@@ -841,15 +762,12 @@ public final class Kafka {
       private long offset_ ;
       /**
        * <code>int64 offset = 5;</code>
-       * @return The offset.
        */
       public long getOffset() {
         return offset_;
       }
       /**
        * <code>int64 offset = 5;</code>
-       * @param value The offset to set.
-       * @return This builder for chaining.
        */
       public Builder setOffset(long value) {
         
@@ -859,7 +777,6 @@ public final class Kafka {
       }
       /**
        * <code>int64 offset = 5;</code>
-       * @return This builder for chaining.
        */
       public Builder clearOffset() {
         
@@ -871,15 +788,12 @@ public final class Kafka {
       private int partition_ ;
       /**
        * <code>int32 partition = 6;</code>
-       * @return The partition.
        */
       public int getPartition() {
         return partition_;
       }
       /**
        * <code>int32 partition = 6;</code>
-       * @param value The partition to set.
-       * @return This builder for chaining.
        */
       public Builder setPartition(int value) {
         
@@ -889,7 +803,6 @@ public final class Kafka {
       }
       /**
        * <code>int32 partition = 6;</code>
-       * @return This builder for chaining.
        */
       public Builder clearPartition() {
         
@@ -897,13 +810,11 @@ public final class Kafka {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
+        return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -925,12 +836,11 @@ public final class Kafka {
 
     private static final com.google.protobuf.Parser<KafkaSinkRecord>
         PARSER = new com.google.protobuf.AbstractParser<KafkaSinkRecord>() {
-      @java.lang.Override
       public KafkaSinkRecord parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new KafkaSinkRecord(input, extensionRegistry);
+          return new KafkaSinkRecord(input, extensionRegistry);
       }
     };
 
@@ -943,7 +853,6 @@ public final class Kafka {
       return PARSER;
     }
 
-    @java.lang.Override
     public sh.batch.events.records.Kafka.KafkaSinkRecord getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -971,10 +880,18 @@ public final class Kafka {
       "vents.recordsZ4github.com/batchcorp/sche" +
       "mas/build/go/events/recordsb\006proto3"
     };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
+    com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
+        }, assigner);
     internal_static_records_KafkaSinkRecord_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_records_KafkaSinkRecord_fieldAccessorTable = new

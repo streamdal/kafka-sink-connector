@@ -32,9 +32,9 @@ import org.apache.kafka.connect.sink.SinkTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sh.batch.events.records.Kafka;
-import sh.batch.services.AddKafkaSinkRecordRequest;
-import sh.batch.services.AddKafkaSinkRecordResponse;
-import sh.batch.services.KafkaSinkCollectorGrpc;
+import sh.batch.services.GRPCCollectorGrpc;
+import sh.batch.services.KafkaSinkRecordRequest;
+import sh.batch.services.KafkaSinkRecordResponse;
 
 import java.util.Collection;
 import java.util.Map;
@@ -43,7 +43,7 @@ public class BatchSinkTask extends SinkTask {
     private static final Logger log = LoggerFactory.getLogger(BatchSinkTask.class);
 
     protected ManagedChannel channel;
-    protected KafkaSinkCollectorGrpc.KafkaSinkCollectorBlockingStub blockingStub;
+    protected GRPCCollectorGrpc.GRPCCollectorBlockingStub blockingStub;
     protected String taskID;
 
     @Override
@@ -73,7 +73,7 @@ public class BatchSinkTask extends SinkTask {
         }
 
         channel = channelBuilder.build();
-        blockingStub = KafkaSinkCollectorGrpc.newBlockingStub(channel);
+        blockingStub = GRPCCollectorGrpc.newBlockingStub(channel);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class BatchSinkTask extends SinkTask {
                 recordsCount, first.topic(), first.kafkaPartition(), first.kafkaOffset()
         );
 
-        AddKafkaSinkRecordRequest.Builder arr = AddKafkaSinkRecordRequest.newBuilder();
+        KafkaSinkRecordRequest.Builder arr = KafkaSinkRecordRequest.newBuilder();
 
         for (SinkRecord record : records) {
             Kafka.KafkaSinkRecord.Builder ksr = Kafka.KafkaSinkRecord.newBuilder()
@@ -111,7 +111,7 @@ public class BatchSinkTask extends SinkTask {
         }
 
         try {
-            AddKafkaSinkRecordResponse resp = blockingStub.addRecord(arr.build());
+            KafkaSinkRecordResponse resp = blockingStub.addKafkaRecord(arr.build());
             log.info("{} records processed", resp.getNumRecordsProcessed());
         } catch (StatusRuntimeException e) {
             String errMessage = String.format("RPC failed: %s", e.getStatus());
